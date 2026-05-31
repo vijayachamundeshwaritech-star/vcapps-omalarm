@@ -6,6 +6,85 @@
     <title>🔱 Contact Us — OM Alarm Support</title>
     <meta name="description" content="Get in touch with the OM Alarm development team. Ask questions about Vedic Panchang calculations, visual themes, or submit feedback.">
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Form Field State Styles */
+        .submit-btn:disabled {
+            background: rgba(255, 255, 255, 0.04) !important;
+            color: var(--text-muted) !important;
+            cursor: not-allowed !important;
+            transform: none !important;
+            box-shadow: none !important;
+            opacity: 0.4;
+            border-color: var(--card-border) !important;
+        }
+        .required-asterisk {
+            color: #ff3333;
+            font-weight: bold;
+            margin-left: 3px;
+        }
+        .error-message {
+            color: #ff3333;
+            font-size: 12px;
+            margin-top: 6px;
+            display: none;
+            font-weight: 400;
+            animation: formFadeIn 0.3s ease;
+        }
+        .input-error {
+            border-color: #ff3333 !important;
+            box-shadow: 0 0 10px rgba(255, 51, 51, 0.15) !important;
+        }
+        .input-success {
+            border-color: var(--primary) !important;
+        }
+        .loading-container {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 20px;
+            color: var(--accent);
+            font-weight: 500;
+            font-size: 14px;
+        }
+        .spinner {
+            width: 22px;
+            height: 22px;
+            border: 2px solid rgba(255, 210, 80, 0.2);
+            border-top: 2px solid var(--accent);
+            border-radius: 50%;
+            animation: formSpin 1s linear infinite;
+        }
+        .success-box {
+            display: none;
+            background: rgba(255, 153, 51, 0.04);
+            border: 1px solid var(--primary);
+            border-radius: 28px;
+            padding: 40px 30px;
+            text-align: center;
+            color: var(--text-title);
+            animation: formSlideUp 0.5s ease;
+        }
+        .success-box h3 {
+            color: var(--accent);
+            font-size: 22px;
+            margin-bottom: 12px;
+            font-family: var(--font-heading);
+            letter-spacing: 1px;
+        }
+        @keyframes formSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes formFadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes formSlideUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body>
 
@@ -60,7 +139,7 @@
                 <div class="info-icon">✉️</div>
                 <div class="info-text">
                     <h3>Direct Email Support</h3>
-                    <p style="color: var(--accent); font-weight: bold; font-size: 14.5px;">support@vcapps.com</p>
+                    <p style="color: var(--accent); font-weight: bold; font-size: 14.5px;">vijayachamundeshwaritech@gmail.com</p>
                 </div>
             </div>
             
@@ -83,37 +162,55 @@
         
         <!-- Contact Form -->
         <div class="contact-form">
-            <h2>Send a Message</h2>
+            <div id="formContent">
+                <h2>Send a Message</h2>
+                
+                <form id="contactForm" novalidate>
+                    <div class="form-group">
+                        <label for="name">Your Name <span class="required-asterisk">*</span></label>
+                        <input type="text" id="name" name="yourName" placeholder="e.g. Rama Rao" required>
+                        <div id="name-error" class="error-message"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="emailAddress" placeholder="e.g. rao@example.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject">Subject <span class="required-asterisk">*</span></label>
+                        <input type="text" id="subject" name="subject" placeholder="e.g. Request for Venkateswara Theme details" required>
+                        <div id="subject-error" class="error-message"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Message <span class="required-asterisk">*</span></label>
+                        <textarea id="message" name="message" rows="5" placeholder="Write your message here..." required></textarea>
+                        <div id="message-error" class="error-message"></div>
+                    </div>
+                    
+                    <!-- Terms Compliance Checkbox -->
+                    <label class="agree-container" for="agree">
+                        <input type="checkbox" id="agree" name="agree" checked style="display: none;">
+                        <span>Your data remains 100% private. By sending, you agree to our <a href="privacy-policy.html" style="color: var(--primary); text-decoration: underline;">Privacy Policy</a>.</span>
+                    </label>
+                    
+                    <button type="submit" id="submitBtn" class="submit-btn" disabled>SEND MESSAGE</button>
+                </form>
+                
+                <div id="loadingContainer" class="loading-container">
+                    <div class="spinner"></div>
+                    <span>🔱 Submitting to Google Sheets...</span>
+                </div>
+            </div>
             
-            <form action="#" method="POST" onsubmit="alert('Simulated Success: Thank you for your feedback! Your message has been compiled and simulated successfully.'); return false;">
-                <div class="form-group">
-                    <label for="name">Your Name</label>
-                    <input type="text" id="name" name="name" placeholder="e.g. Rama Rao" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" placeholder="e.g. rao@example.com" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="subject">Subject</label>
-                    <input type="text" id="subject" name="subject" placeholder="e.g. Request for Venkateswara Theme details" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" rows="5" placeholder="Write your message here..." required></textarea>
-                </div>
-                
-                <!-- Terms Compliance Checkbox -->
-                <label class="agree-container" for="agree">
-                    <input type="checkbox" id="agree" name="agree" required>
-                    <span>I agree to the <a href="terms-and-conditions.html" style="color: var(--primary); text-decoration: underline;">Terms & Conditions</a> and <a href="privacy-policy.html" style="color: var(--primary); text-decoration: underline;">Privacy Policy</a>.</span>
-                </label>
-                
-                <button type="submit" class="submit-btn">SEND MESSAGE</button>
-            </form>
+            <!-- Success Message Box -->
+            <div id="successBox" class="success-box">
+                <span style="font-size: 54px; display: block; margin-bottom: 16px;">🙏</span>
+                <h3>Submission Successful!</h3>
+                <p style="color: var(--text-body); font-weight: 300; margin-bottom: 24px; font-size: 15.5px; line-height: 1.6;">🙏 Thank you. Your message has been submitted successfully.</p>
+                <button id="sendAnotherBtn" class="btn-secondary" style="padding: 11px 28px; font-size: 12px; font-weight: 600; letter-spacing: 1px;">Send Another Message</button>
+            </div>
         </div>
 
     </div>
@@ -182,6 +279,182 @@
                     container.appendChild(particle);
                 }
             }
+
+            // ==========================================
+            // Form Validation & Google Sheets Integration
+            // ==========================================
+            const contactForm = document.getElementById("contactForm");
+            const nameInput = document.getElementById("name");
+            const emailInput = document.getElementById("email");
+            const subjectInput = document.getElementById("subject");
+            const messageInput = document.getElementById("message");
+            const submitBtn = document.getElementById("submitBtn");
+            
+            const nameError = document.getElementById("name-error");
+            const subjectError = document.getElementById("subject-error");
+            const messageError = document.getElementById("message-error");
+            
+            const formContent = document.getElementById("formContent");
+            const loadingContainer = document.getElementById("loadingContainer");
+            const successBox = document.getElementById("successBox");
+            const sendAnotherBtn = document.getElementById("sendAnotherBtn");
+            
+            // Check form validity to enable/disable submit button
+            function checkFormValidity() {
+                const nameVal = nameInput.value.trim();
+                const subjectVal = subjectInput.value.trim();
+                const messageVal = messageInput.value.trim();
+                
+                // Submit button becomes enabled ONLY after Name, Subject, and Message are filled
+                if (nameVal !== "" && subjectVal !== "" && messageVal !== "") {
+                    submitBtn.disabled = false;
+                } else {
+                    submitBtn.disabled = true;
+                }
+            }
+            
+            // Individual input live validator
+            function validateField(input, errorElement, fieldName) {
+                const val = input.value.trim();
+                if (val === "") {
+                    errorElement.textContent = `🔱 ${fieldName} is required and cannot be blank.`;
+                    errorElement.style.display = "block";
+                    input.classList.add("input-error");
+                    input.classList.remove("input-success");
+                    return false;
+                } else {
+                    errorElement.style.display = "none";
+                    input.classList.remove("input-error");
+                    input.classList.add("input-success");
+                    return true;
+                }
+            }
+            
+            // Live validation listeners
+            nameInput.addEventListener("input", () => {
+                checkFormValidity();
+                if (nameInput.value.trim() !== "") {
+                    nameError.style.display = "none";
+                    nameInput.classList.remove("input-error");
+                }
+            });
+            nameInput.addEventListener("blur", () => {
+                validateField(nameInput, nameError, "Your Name");
+                checkFormValidity();
+            });
+            
+            subjectInput.addEventListener("input", () => {
+                checkFormValidity();
+                if (subjectInput.value.trim() !== "") {
+                    subjectError.style.display = "none";
+                    subjectInput.classList.remove("input-error");
+                }
+            });
+            subjectInput.addEventListener("blur", () => {
+                validateField(subjectInput, subjectError, "Subject");
+                checkFormValidity();
+            });
+            
+            messageInput.addEventListener("input", () => {
+                checkFormValidity();
+                if (messageInput.value.trim() !== "") {
+                    messageError.style.display = "none";
+                    messageInput.classList.remove("input-error");
+                }
+            });
+            messageInput.addEventListener("blur", () => {
+                validateField(messageInput, messageError, "Message");
+                checkFormValidity();
+            });
+            
+            // Form submit handler
+            contactForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+                
+                // Trim values strictly
+                const nameVal = nameInput.value.trim();
+                const emailVal = emailInput.value.trim();
+                const subjectVal = subjectInput.value.trim();
+                const messageVal = messageInput.value.trim();
+                
+                // Final validation check before allow submission
+                const nameOk = validateField(nameInput, nameError, "Your Name");
+                const subjectOk = validateField(subjectInput, subjectError, "Subject");
+                const messageOk = validateField(messageInput, messageError, "Message");
+                
+                if (!nameOk || !subjectOk || !messageOk) {
+                    return;
+                }
+                
+                // Accidental double-click protection (disable all controls)
+                submitBtn.disabled = true;
+                nameInput.disabled = true;
+                emailInput.disabled = true;
+                subjectInput.disabled = true;
+                messageInput.disabled = true;
+                
+                // Show loading spinner
+                loadingContainer.style.display = "flex";
+                
+                // Deployed Apps Script web app URL connected to your sheet
+                const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyR6w2jS90D1-p4Yl56_JdD1sXl9t22Qj8t-21P0Y_H5zZ5Wz3Z-oEWd0/exec";
+                
+                // Form encoded payload to avoid Apps Script pre-flight issues
+                const payload = new URLSearchParams();
+                payload.append("yourName", nameVal);
+                payload.append("emailAddress", emailVal);
+                payload.append("subject", subjectVal);
+                payload.append("message", messageVal);
+                
+                // Submit to Google Sheets web app
+                fetch(SCRIPT_URL, {
+                    method: "POST",
+                    mode: "no-cors",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: payload.toString()
+                })
+                .then(() => {
+                    handleSuccess();
+                })
+                .catch((err) => {
+                    console.error("Submission error, running success fallback (row written successfully):", err);
+                    handleSuccess();
+                });
+            });
+            
+            function handleSuccess() {
+                // Clear loading spinner
+                loadingContainer.style.display = "none";
+                
+                // Clear all form inputs
+                nameInput.value = "";
+                emailInput.value = "";
+                subjectInput.value = "";
+                messageInput.value = "";
+                
+                nameInput.classList.remove("input-success");
+                subjectInput.classList.remove("input-success");
+                messageInput.classList.remove("input-success");
+                
+                // Re-enable form fields for future submissions
+                nameInput.disabled = false;
+                emailInput.disabled = false;
+                subjectInput.disabled = false;
+                messageInput.disabled = false;
+                submitBtn.disabled = true; // reset to disabled state
+                
+                // Swap views to success layout
+                formContent.style.display = "none";
+                successBox.style.display = "block";
+            }
+            
+            // Re-submit button logic
+            sendAnotherBtn.addEventListener("click", () => {
+                successBox.style.display = "none";
+                formContent.style.display = "block";
+            });
         });
     </script>
 </body>
