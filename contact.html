@@ -368,6 +368,12 @@
             // Hardcoded user deployed SCRIPT_URL
             const DEFAULT_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyFUA7dEn17J4mzh43pD9nBgA_Kdz4gY2tJiWC51W372gcQVaKNaMzHKJT5D8_UdUsBXg/exec";
 
+            // Self-cleaning dirty localStorage cache from older versions
+            const oldPlaceholder = "https://script.google.com/macros/s/AKfycbyR6w2jS90D1-p4Yl56_JdD1sXl9t22Qj8t-21P0Y_H5zZ5Wz3Z-oEWd0/exec";
+            if (localStorage.getItem("om_alarm_script_url") === oldPlaceholder) {
+                localStorage.removeItem("om_alarm_script_url");
+            }
+
             // 1. Get current active endpoint URL (Local Storage vs Hardcoded Default)
             function getScriptUrl() {
                 const saved = localStorage.getItem("om_alarm_script_url");
