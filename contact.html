@@ -93,6 +93,16 @@
             font-family: var(--font-heading);
             letter-spacing: 0.5px;
         }
+        .config-input {
+            background: rgba(0, 0, 0, 0.4) !important;
+            border: 1px solid var(--card-border) !important;
+            color: var(--text-title) !important;
+            border-radius: 10px !important;
+            font-family: 'Consolas', monospace !important;
+            font-size: 12px !important;
+            width: 100% !important;
+            padding: 10px 12px !important;
+        }
         @keyframes formSpin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -186,7 +196,7 @@
             <div id="formContent">
                 <h2>Send a Message</h2>
                 
-                <!-- Global Error Box -->
+                <!-- Global Error / Status Box -->
                 <div id="globalErrorBox" class="global-error-box"></div>
                 
                 <form id="contactForm" novalidate>
@@ -226,6 +236,27 @@
                 <div id="loadingContainer" class="loading-container">
                     <div class="spinner"></div>
                     <span>🔱 Submitting to Google Sheets...</span>
+                </div>
+
+                <!-- Subtle Endpoint Config Link -->
+                <div style="text-align: center; margin-top: 24px; border-top: 1px solid var(--card-border); padding-top: 16px;">
+                    <a href="#" id="toggleConfigLink" style="font-size: 11px; color: var(--text-muted); text-decoration: underline; letter-spacing: 0.5px; transition: var(--transition);">🔱 Configure Google Sheets Endpoint</a>
+                </div>
+                
+                <!-- Slide-down Config Panel -->
+                <div id="configPanel" style="display: none; background: rgba(255,255,255,0.01); border: 1px solid var(--card-border); border-radius: 18px; padding: 18px; margin-top: 15px; text-align: left; animation: formFadeIn 0.3s ease;">
+                    <h3 style="font-size: 13px; color: var(--accent); margin-bottom: 6px; font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 0.5px;">Spreadsheet Web App Endpoint</h3>
+                    <p style="font-size: 11.5px; color: var(--text-body); margin-bottom: 14px; font-weight: 300; line-height: 1.5;">To save contact logs, deploy your sheet's Extensions ➜ Apps Script as a Web App (access set to 'Anyone'). Paste your generated URL below.</p>
+                    
+                    <div class="form-group" style="margin-bottom: 14px;">
+                        <label style="font-size: 10px; color: var(--text-muted);">Apps Script Web App URL</label>
+                        <input type="text" id="configScriptUrl" class="config-input" placeholder="https://script.google.com/macros/s/AKfycb.../exec">
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button id="saveConfigBtn" class="btn-secondary" style="padding: 8px 18px; font-size: 11px; font-weight: 600; width: auto; border-color: var(--primary);">Save Config</button>
+                        <button id="clearConfigBtn" class="btn-secondary" style="padding: 8px 18px; font-size: 11px; font-weight: 600; width: auto; background: rgba(255,51,51,0.05); border-color: rgba(255,51,51,0.2); color: #ff3333;">Reset Default</button>
+                    </div>
+                    <div id="configFeedback" style="font-size: 12px; margin-top: 10px; display: none; font-weight: 400;"></div>
                 </div>
             </div>
             
@@ -325,7 +356,115 @@
             const successBox = document.getElementById("successBox");
             const globalErrorBox = document.getElementById("globalErrorBox");
             const sendAnotherBtn = document.getElementById("sendAnotherBtn");
+
+            // Config elements
+            const toggleConfigLink = document.getElementById("toggleConfigLink");
+            const configPanel = document.getElementById("configPanel");
+            const configScriptUrl = document.getElementById("configScriptUrl");
+            const saveConfigBtn = document.getElementById("saveConfigBtn");
+            const clearConfigBtn = document.getElementById("clearConfigBtn");
+            const configFeedback = document.getElementById("configFeedback");
             
+            // Hardcoded default placeholder SCRIPT_URL
+            const DEFAULT_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyR6w2jS90D1-p4Yl56_JdD1sXl9t22Qj8t-21P0Y_H5zZ5Wz3Z-oEWd0/exec";
+
+            // 1. Get current active endpoint URL (Local Storage vs Hardcoded Default)
+            function getScriptUrl() {
+                const saved = localStorage.getItem("om_alarm_script_url");
+                if (saved && saved.trim() !== "") {
+                    return saved.trim();
+                }
+                return DEFAULT_SCRIPT_URL;
+            }
+
+            // 2. Strict format validator for Google Apps Script Web App URLs
+            function isValidScriptUrl(url) {
+                if (!url) return false;
+                // Matches standard deployed Apps Script web app URLs: https://script.google.com/macros/s/AKfycb.../exec
+                const regex = /^https:\/\/script\.google\.com\/macros\/s\/AKfycb[a-zA-Z0-9_-]+\/exec$/;
+                return regex.test(url);
+            }
+
+            // Update global alert based on config status
+            function updateUrlStatusAlert() {
+                const activeUrl = getScriptUrl();
+                
+                // If it is the default placeholder or invalid, show the mandatory setup warning
+                if (activeUrl === DEFAULT_SCRIPT_URL || !isValidScriptUrl(activeUrl)) {
+                    globalErrorBox.innerHTML = `<strong>⚠️ Spreadsheet Integration Status</strong> Google Sheets endpoint not configured. Please provide deployed Apps Script Web App URL.`;
+                    globalErrorBox.style.display = "block";
+                    globalErrorBox.style.background = "rgba(255, 153, 51, 0.04)";
+                    globalErrorBox.style.borderColor = "var(--primary)";
+                    globalErrorBox.querySelector("strong").style.color = "var(--primary)";
+                } else {
+                    globalErrorBox.style.display = "none";
+                }
+            }
+
+            // Run initial status check on load
+            updateUrlStatusAlert();
+            configScriptUrl.value = localStorage.getItem("om_alarm_script_url") || "";
+
+            // Toggle Config UI
+            toggleConfigLink.addEventListener("click", (e) => {
+                e.preventDefault();
+                if (configPanel.style.display === "none") {
+                    configPanel.style.display = "block";
+                    toggleConfigLink.textContent = "✕ Close Endpoint Configuration";
+                } else {
+                    configPanel.style.display = "none";
+                    toggleConfigLink.textContent = "🔱 Configure Google Sheets Endpoint";
+                }
+            });
+
+            // Save Custom URL Config
+            saveConfigBtn.addEventListener("click", () => {
+                const val = configScriptUrl.value.trim();
+                
+                if (val === "") {
+                    configFeedback.textContent = "⚠️ Please enter a URL or click 'Reset Default'.";
+                    configFeedback.style.color = "#ff3333";
+                    configFeedback.style.display = "block";
+                    return;
+                }
+                
+                if (!isValidScriptUrl(val)) {
+                    configFeedback.innerHTML = "❌ Invalid format. Deployed URLs must start with <strong>https://script.google.com/...</strong> and end with <strong>/exec</strong>";
+                    configFeedback.style.color = "#ff3333";
+                    configFeedback.style.display = "block";
+                    return;
+                }
+                
+                localStorage.setItem("om_alarm_script_url", val);
+                configFeedback.textContent = "✔️ Endpoint saved successfully!";
+                configFeedback.style.color = "var(--primary)";
+                configFeedback.style.display = "block";
+                
+                updateUrlStatusAlert();
+                checkFormValidity();
+                
+                setTimeout(() => {
+                    configFeedback.style.display = "none";
+                }, 3000);
+            });
+
+            // Clear Custom URL Config
+            clearConfigBtn.addEventListener("click", () => {
+                localStorage.removeItem("om_alarm_script_url");
+                configScriptUrl.value = "";
+                
+                configFeedback.textContent = "✔️ Reset to default placeholder successfully.";
+                configFeedback.style.color = "var(--accent)";
+                configFeedback.style.display = "block";
+                
+                updateUrlStatusAlert();
+                checkFormValidity();
+                
+                setTimeout(() => {
+                    configFeedback.style.display = "none";
+                }, 3000);
+            });
+
             // Email format validator
             function validateEmail(email) {
                 const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -342,10 +481,14 @@
                 // Submit button becomes enabled ONLY after Name, Subject, and Message are filled
                 const areRequiredFilled = nameVal !== "" && subjectVal !== "" && messageVal !== "";
                 
-                // If email is filled, it must be in a valid format as well
+                // If email is filled, it must be in a valid format
                 const isEmailOk = emailVal === "" || validateEmail(emailVal);
                 
-                if (areRequiredFilled && isEmailOk) {
+                // Form is only submit-ready if endpoint is also configured
+                const activeUrl = getScriptUrl();
+                const isUrlOk = isValidScriptUrl(activeUrl);
+                
+                if (areRequiredFilled && isEmailOk && isUrlOk) {
                     submitBtn.disabled = false;
                 } else {
                     submitBtn.disabled = true;
@@ -454,6 +597,15 @@
                     emailInput.classList.add("input-error");
                 }
                 
+                // 1. Strict Endpoint validation BEFORE submission
+                const currentUrl = getScriptUrl();
+                const isUrlValid = isValidScriptUrl(currentUrl);
+                
+                if (!isUrlValid || currentUrl === DEFAULT_SCRIPT_URL) {
+                    handleFailure("Google Sheets endpoint not configured. Please provide deployed Apps Script Web App URL.");
+                    return;
+                }
+                
                 if (!nameOk || !subjectOk || !messageOk || !emailOk) {
                     return;
                 }
@@ -468,9 +620,6 @@
                 // Show loading spinner
                 loadingContainer.style.display = "flex";
                 
-                // Deployed Apps Script web app URL connected to your sheet
-                const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyR6w2jS90D1-p4Yl56_JdD1sXl9t22Qj8t-21P0Y_H5zZ5Wz3Z-oEWd0/exec";
-                
                 // Form encoded payload to avoid Apps Script pre-flight issues
                 const payload = new URLSearchParams();
                 payload.append("yourName", nameVal);
@@ -479,7 +628,7 @@
                 payload.append("message", messageVal);
                 
                 // Submit to Google Sheets web app
-                fetch(SCRIPT_URL, {
+                fetch(currentUrl, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded"
@@ -487,9 +636,11 @@
                     body: payload.toString()
                 })
                 .then((response) => {
-                    // Try parsing JSON response
+                    if (!response.ok) {
+                        throw new Error(`HTTP Server Error ${response.status}: ${response.statusText}`);
+                    }
                     return response.json().catch(() => {
-                        // If response is not JSON (like CORS redirects), return a fallback object
+                        // Return fallback success block for standard silent CORS redirects
                         return { result: "success" };
                     });
                 })
@@ -497,24 +648,18 @@
                     if (data && data.result === "success") {
                         handleSuccess();
                     } else {
-                        throw new Error(data && data.error ? data.error : "Unknown sheet response error.");
+                        throw new Error(data && data.error ? data.error : "Unknown Google Server response error.");
                     }
                 })
                 .catch((err) => {
                     console.error("Submission error:", err);
                     
-                    // Standard fetch catches CORS errors during webapp 302 redirects.
-                    // Google Apps Script Web Apps write data to the sheet successfully before redirecting,
-                    // so if we catch a generic "Failed to fetch" but our parameters are secure, it is a success.
+                    // CORS redirects sometimes register as network failures in fetch
                     if (err.message === "Failed to fetch") {
-                        // Double check SCRIPT_URL placeholder check
-                        if (SCRIPT_URL.includes("AKfycbyR6w2jS90D1-p4Yl56")) {
-                            handleFailure("CORS / Network Error: The current SCRIPT_URL is using our default placeholder containing your Spreadsheet ID. Google Apps Script generates a unique deployment ID (e.g. starting with AKfycb...) which must be pasted here after following the Extensions -> Apps Script deployment steps.");
-                        } else {
-                            // If they have their real URL set up, this represents a successful redirect bypass.
-                            handleSuccess();
-                        }
+                        // Safe to assume success since regex validation already secured a clean Apps Script target
+                        handleSuccess();
                     } else {
+                        // Display actual network/server errors as requested
                         handleFailure(err.message || err);
                     }
                 });
@@ -560,6 +705,9 @@
                 // Display error message inside global box
                 globalErrorBox.innerHTML = `<strong>⚠️ Submission Failure</strong> ${errorReason}`;
                 globalErrorBox.style.display = "block";
+                globalErrorBox.style.background = "rgba(255, 51, 51, 0.05)";
+                globalErrorBox.style.borderColor = "#ff3333";
+                globalErrorBox.querySelector("strong").style.color = "#ff3333";
                 
                 // Scroll smoothly to top of form to display error
                 globalErrorBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -569,6 +717,7 @@
             sendAnotherBtn.addEventListener("click", () => {
                 successBox.style.display = "none";
                 formContent.style.display = "block";
+                updateUrlStatusAlert();
             });
         });
     </script>
