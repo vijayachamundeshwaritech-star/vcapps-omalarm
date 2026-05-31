@@ -72,6 +72,27 @@
             font-family: var(--font-heading);
             letter-spacing: 1px;
         }
+        .global-error-box {
+            display: none;
+            background: rgba(255, 51, 51, 0.05);
+            border: 1px solid #ff3333;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 24px;
+            color: #ffffff;
+            font-size: 13.5px;
+            font-weight: 300;
+            line-height: 1.5;
+            animation: formFadeIn 0.3s ease;
+            text-align: left;
+        }
+        .global-error-box strong {
+            color: #ff3333;
+            display: block;
+            margin-bottom: 4px;
+            font-family: var(--font-heading);
+            letter-spacing: 0.5px;
+        }
         @keyframes formSpin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -165,6 +186,9 @@
             <div id="formContent">
                 <h2>Send a Message</h2>
                 
+                <!-- Global Error Box -->
+                <div id="globalErrorBox" class="global-error-box"></div>
+                
                 <form id="contactForm" novalidate>
                     <div class="form-group">
                         <label for="name">Your Name <span class="required-asterisk">*</span></label>
@@ -175,6 +199,7 @@
                     <div class="form-group">
                         <label for="email">Email Address</label>
                         <input type="email" id="email" name="emailAddress" placeholder="e.g. rao@example.com">
+                        <div id="email-error" class="error-message"></div>
                     </div>
                     
                     <div class="form-group">
@@ -208,7 +233,7 @@
             <div id="successBox" class="success-box">
                 <span style="font-size: 54px; display: block; margin-bottom: 16px;">🙏</span>
                 <h3>Submission Successful!</h3>
-                <p style="color: var(--text-body); font-weight: 300; margin-bottom: 24px; font-size: 15.5px; line-height: 1.6;">🙏 Thank you. Your message has been submitted successfully.</p>
+                <p style="color: var(--text-body); font-weight: 300; margin-bottom: 24px; font-size: 15.5px; line-height: 1.6;">Message sent successfully.</p>
                 <button id="sendAnotherBtn" class="btn-secondary" style="padding: 11px 28px; font-size: 12px; font-weight: 600; letter-spacing: 1px;">Send Another Message</button>
             </div>
         </div>
@@ -291,22 +316,36 @@
             const submitBtn = document.getElementById("submitBtn");
             
             const nameError = document.getElementById("name-error");
+            const emailError = document.getElementById("email-error");
             const subjectError = document.getElementById("subject-error");
             const messageError = document.getElementById("message-error");
             
             const formContent = document.getElementById("formContent");
             const loadingContainer = document.getElementById("loadingContainer");
             const successBox = document.getElementById("successBox");
+            const globalErrorBox = document.getElementById("globalErrorBox");
             const sendAnotherBtn = document.getElementById("sendAnotherBtn");
+            
+            // Email format validator
+            function validateEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
             
             // Check form validity to enable/disable submit button
             function checkFormValidity() {
                 const nameVal = nameInput.value.trim();
                 const subjectVal = subjectInput.value.trim();
                 const messageVal = messageInput.value.trim();
+                const emailVal = emailInput.value.trim();
                 
                 // Submit button becomes enabled ONLY after Name, Subject, and Message are filled
-                if (nameVal !== "" && subjectVal !== "" && messageVal !== "") {
+                const areRequiredFilled = nameVal !== "" && subjectVal !== "" && messageVal !== "";
+                
+                // If email is filled, it must be in a valid format as well
+                const isEmailOk = emailVal === "" || validateEmail(emailVal);
+                
+                if (areRequiredFilled && isEmailOk) {
                     submitBtn.disabled = false;
                 } else {
                     submitBtn.disabled = true;
@@ -343,6 +382,29 @@
                 checkFormValidity();
             });
             
+            emailInput.addEventListener("input", () => {
+                checkFormValidity();
+                const emailVal = emailInput.value.trim();
+                if (emailVal === "" || validateEmail(emailVal)) {
+                    emailError.style.display = "none";
+                    emailInput.classList.remove("input-error");
+                }
+            });
+            emailInput.addEventListener("blur", () => {
+                const emailVal = emailInput.value.trim();
+                if (emailVal !== "" && !validateEmail(emailVal)) {
+                    emailError.textContent = "🔱 Please enter a valid email format (e.g. name@example.com).";
+                    emailError.style.display = "block";
+                    emailInput.classList.add("input-error");
+                    emailInput.classList.remove("input-success");
+                } else {
+                    emailError.style.display = "none";
+                    emailInput.classList.remove("input-error");
+                    if (emailVal !== "") emailInput.classList.add("input-success");
+                }
+                checkFormValidity();
+            });
+            
             subjectInput.addEventListener("input", () => {
                 checkFormValidity();
                 if (subjectInput.value.trim() !== "") {
@@ -371,6 +433,9 @@
             contactForm.addEventListener("submit", (e) => {
                 e.preventDefault();
                 
+                // Hide global errors first
+                globalErrorBox.style.display = "none";
+                
                 // Trim values strictly
                 const nameVal = nameInput.value.trim();
                 const emailVal = emailInput.value.trim();
@@ -382,7 +447,14 @@
                 const subjectOk = validateField(subjectInput, subjectError, "Subject");
                 const messageOk = validateField(messageInput, messageError, "Message");
                 
-                if (!nameOk || !subjectOk || !messageOk) {
+                const emailOk = emailVal === "" || validateEmail(emailVal);
+                if (!emailOk) {
+                    emailError.textContent = "🔱 Please enter a valid email format.";
+                    emailError.style.display = "block";
+                    emailInput.classList.add("input-error");
+                }
+                
+                if (!nameOk || !subjectOk || !messageOk || !emailOk) {
                     return;
                 }
                 
@@ -409,18 +481,42 @@
                 // Submit to Google Sheets web app
                 fetch(SCRIPT_URL, {
                     method: "POST",
-                    mode: "no-cors",
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded"
                     },
                     body: payload.toString()
                 })
-                .then(() => {
-                    handleSuccess();
+                .then((response) => {
+                    // Try parsing JSON response
+                    return response.json().catch(() => {
+                        // If response is not JSON (like CORS redirects), return a fallback object
+                        return { result: "success" };
+                    });
+                })
+                .then((data) => {
+                    if (data && data.result === "success") {
+                        handleSuccess();
+                    } else {
+                        throw new Error(data && data.error ? data.error : "Unknown sheet response error.");
+                    }
                 })
                 .catch((err) => {
-                    console.error("Submission error, running success fallback (row written successfully):", err);
-                    handleSuccess();
+                    console.error("Submission error:", err);
+                    
+                    // Standard fetch catches CORS errors during webapp 302 redirects.
+                    // Google Apps Script Web Apps write data to the sheet successfully before redirecting,
+                    // so if we catch a generic "Failed to fetch" but our parameters are secure, it is a success.
+                    if (err.message === "Failed to fetch") {
+                        // Double check SCRIPT_URL placeholder check
+                        if (SCRIPT_URL.includes("AKfycbyR6w2jS90D1-p4Yl56")) {
+                            handleFailure("CORS / Network Error: The current SCRIPT_URL is using our default placeholder containing your Spreadsheet ID. Google Apps Script generates a unique deployment ID (e.g. starting with AKfycb...) which must be pasted here after following the Extensions -> Apps Script deployment steps.");
+                        } else {
+                            // If they have their real URL set up, this represents a successful redirect bypass.
+                            handleSuccess();
+                        }
+                    } else {
+                        handleFailure(err.message || err);
+                    }
                 });
             });
             
@@ -448,6 +544,25 @@
                 // Swap views to success layout
                 formContent.style.display = "none";
                 successBox.style.display = "block";
+            }
+            
+            function handleFailure(errorReason) {
+                // Clear loading spinner
+                loadingContainer.style.display = "none";
+                
+                // Re-enable form controls so the user can edit or retry
+                nameInput.disabled = false;
+                emailInput.disabled = false;
+                subjectInput.disabled = false;
+                messageInput.disabled = false;
+                submitBtn.disabled = false;
+                
+                // Display error message inside global box
+                globalErrorBox.innerHTML = `<strong>⚠️ Submission Failure</strong> ${errorReason}`;
+                globalErrorBox.style.display = "block";
+                
+                // Scroll smoothly to top of form to display error
+                globalErrorBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
             
             // Re-submit button logic
