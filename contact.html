@@ -365,8 +365,8 @@
             const clearConfigBtn = document.getElementById("clearConfigBtn");
             const configFeedback = document.getElementById("configFeedback");
             
-            // Hardcoded default placeholder SCRIPT_URL
-            const DEFAULT_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyR6w2jS90D1-p4Yl56_JdD1sXl9t22Qj8t-21P0Y_H5zZ5Wz3Z-oEWd0/exec";
+            // Hardcoded user deployed SCRIPT_URL
+            const DEFAULT_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyFUA7dEn17J4mzh43pD9nBgA_Kdz4gY2tJiWC51W372gcQVaKNaMzHKJT5D8_UdUsBXg/exec";
 
             // 1. Get current active endpoint URL (Local Storage vs Hardcoded Default)
             function getScriptUrl() {
@@ -389,13 +389,13 @@
             function updateUrlStatusAlert() {
                 const activeUrl = getScriptUrl();
                 
-                // If it is the default placeholder or invalid, show the mandatory setup warning
-                if (activeUrl === DEFAULT_SCRIPT_URL || !isValidScriptUrl(activeUrl)) {
+                // Check if the current URL is valid. Since the default is now fully valid, the warning box will remain hidden!
+                if (!isValidScriptUrl(activeUrl)) {
                     globalErrorBox.innerHTML = `<strong>⚠️ Spreadsheet Integration Status</strong> Google Sheets endpoint not configured. Please provide deployed Apps Script Web App URL.`;
                     globalErrorBox.style.display = "block";
-                    globalErrorBox.style.background = "rgba(255, 153, 51, 0.04)";
-                    globalErrorBox.style.borderColor = "var(--primary)";
-                    globalErrorBox.querySelector("strong").style.color = "var(--primary)";
+                    globalErrorBox.style.background = "rgba(255, 51, 51, 0.05)";
+                    globalErrorBox.style.borderColor = "#ff3333";
+                    globalErrorBox.querySelector("strong").style.color = "#ff3333";
                 } else {
                     globalErrorBox.style.display = "none";
                 }
@@ -453,7 +453,7 @@
                 localStorage.removeItem("om_alarm_script_url");
                 configScriptUrl.value = "";
                 
-                configFeedback.textContent = "✔️ Reset to default placeholder successfully.";
+                configFeedback.textContent = "✔️ Reset to default deployed URL successfully.";
                 configFeedback.style.color = "var(--accent)";
                 configFeedback.style.display = "block";
                 
@@ -601,7 +601,7 @@
                 const currentUrl = getScriptUrl();
                 const isUrlValid = isValidScriptUrl(currentUrl);
                 
-                if (!isUrlValid || currentUrl === DEFAULT_SCRIPT_URL) {
+                if (!isUrlValid) {
                     handleFailure("Google Sheets endpoint not configured. Please provide deployed Apps Script Web App URL.");
                     return;
                 }
