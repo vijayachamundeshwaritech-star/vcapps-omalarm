@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔱 Vedic Blog & Updates — OM Alarm</title>
+    <meta name="description" content="Explore insights on Vedic timekeeping, the physics of 432Hz sacred meditation frequencies, and premium Android widget customization with OM Alarm.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Dynamic Saffron Aura Background Layer -->
+    <div class="volumetric-aura" style="top: 10%; left: 10%;"></div>
+    <div class="volumetric-aura-gold" style="top: 50%; right: 8%;"></div>
+    
+    <!-- Dynamic Floating Saffron Particles -->
+    <div class="particles-container"></div>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon-wrapper">
+                    <span class="logo-icon">🔱</span>
+                    <div class="logo-icon-glow"></div>
+                </div>
+                OM <span>ALARM</span>
+            </a>
+            
+            <button class="hamburger">☰</button>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="blog.html" class="active">Vedic Blog</a></li>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="terms-and-conditions.html">Terms</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <a href="index.html#download" class="cta-btn">Download APK</a>
+        </div>
+    </header>
+
+    <!-- Inner Header -->
+    <div class="inner-header">
+        <h1>🔱 Vedic Blog & Insights</h1>
+        <p>Deepen your spiritual synchronization. Read about the physics of sacred tuning, offline astrology calculations, and custom home screen design tips.</p>
+    </div>
+
+    <!-- Blog Grid -->
+    <div class="blog-grid">
+        
+        <!-- Article 1 -->
+        <article class="blog-card">
+            <div class="blog-meta">
+                <span>📚 MEDITATION PHYSICS</span>
+                <span>30 MAY 2026</span>
+            </div>
+            <div class="blog-body">
+                <h3>The Science of 432Hz Sacred Tunings in OM Alarm</h3>
+                <p>Learn why we chose to mathematically synthesize our built-in ringtones at exactly 432Hz rather than the standard 440Hz tuning. Explore how these sacred frequencies interact with the human brain for gentle, calm morning awakening.</p>
+                <a href="#" class="read-more" onclick="alert('Article expansion is a demonstration feature. Full article: 432Hz is mathematically consistent with the universe, offering standard natural brainwave alignment.'); return false;">Read Full Article ➜</a>
+            </div>
+        </article>
+
+        <!-- Article 2 -->
+        <article class="blog-card">
+            <div class="blog-meta">
+                <span>📅 VEDIC TIMEKEEPING</span>
+                <span>28 MAY 2026</span>
+            </div>
+            <div class="blog-body">
+                <h3>Offline Panchangam Calculations Demystified</h3>
+                <p>Discover how OM Alarm calculates dynamic Tithi, Nakshatram, and Rahu Kalam timings completely offline! By implementing complex celestial orbit formulas directly in Kotlin, we calculate astrological schedules locally without internet access.</p>
+                <a href="#" class="read-more" onclick="alert('Article expansion is a demonstration feature. Full article: Your offline latitude and longitude are calculated locally against orbital formulas, completely preserving privacy.'); return false;">Read Full Article ➜</a>
+            </div>
+        </article>
+
+        <!-- Article 3 -->
+        <article class="blog-card">
+            <div class="blog-meta">
+                <span>📱 ANDROID CUSTOMISATION</span>
+                <span>25 MAY 2026</span>
+            </div>
+            <div class="blog-body">
+                <h3>Elevate Your Home Screen with Devotional Clock Widgets</h3>
+                <p>Unlock the full power of OM Alarm's widget engine. A step-by-step walkthrough detailing how to customize 10 Analog and 10 Digital clock styles with premium deity watermarks and local date/time syncing.</p>
+                <a href="#" class="read-more" onclick="alert('Article expansion is a demonstration feature. Full article: Widgets survive system kills by using local dynamic BroadcastReceivers mapped in the manifest.'); return false;">Read Full Article ➜</a>
+            </div>
+        </article>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p class="logo" style="justify-content: center;">
+                <div class="logo-icon-wrapper" style="margin: 0 auto 0 0; display: inline-flex; width: auto; height: auto;">
+                    <span class="logo-icon">🔱</span>
+                </div>
+                OM <span>ALARM</span>
+            </p>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="blog.html">Vedic Blog</a>
+                <a href="privacy-policy.html">Privacy Policy</a>
+                <a href="terms-and-conditions.html">Terms & Conditions</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <p class="copyright">&copy; 2026 VC Apps. All rights reserved. OM Alarm is a 100% offline-first devotional utility.</p>
+        </div>
+    </footer>
+
+    <!-- Interactive Navigation Drawer & Golden Particle Script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Scroll tracking header transitions
+            const header = document.querySelector("header");
+            window.addEventListener("scroll", () => {
+                if (window.scrollY > 40) {
+                    header.classList.add("scrolled");
+                } else {
+                    header.classList.remove("scrolled");
+                }
+            });
+
+            // Mobile Hamburger menu control
+            const hamburger = document.querySelector(".hamburger");
+            const nav = document.querySelector("nav");
+            if (hamburger && nav) {
+                hamburger.addEventListener("click", () => {
+                    nav.classList.toggle("active");
+                    hamburger.textContent = nav.classList.contains("active") ? "✕" : "☰";
+                });
+            }
+
+            // High-fidelity Javascript Golden Particle Generator
+            const container = document.querySelector(".particles-container");
+            if (container) {
+                for (let i = 0; i < 20; i++) {
+                    const particle = document.createElement("div");
+                    particle.classList.add("particle");
+                    
+                    const size = Math.random() * 5 + 1.5;
+                    const left = Math.random() * 100;
+                    const delay = Math.random() * 12;
+                    const duration = Math.random() * 14 + 10;
+                    
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    particle.style.left = `${left}%`;
+                    particle.style.animationDelay = `${delay}s`;
+                    particle.style.animationDuration = `${duration}s`;
+                    
+                    container.appendChild(particle);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

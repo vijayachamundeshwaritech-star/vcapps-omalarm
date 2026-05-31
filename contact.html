@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔱 Contact Us — OM Alarm Support</title>
+    <meta name="description" content="Get in touch with the OM Alarm development team. Ask questions about Vedic Panchang calculations, visual themes, or submit feedback.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Dynamic Saffron Aura Background Layer -->
+    <div class="volumetric-aura" style="top: 10%; left: 10%;"></div>
+    <div class="volumetric-aura-gold" style="top: 50%; right: 5%;"></div>
+    
+    <!-- Dynamic Floating Saffron Particles -->
+    <div class="particles-container"></div>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon-wrapper">
+                    <span class="logo-icon">🔱</span>
+                    <div class="logo-icon-glow"></div>
+                </div>
+                OM <span>ALARM</span>
+            </a>
+            
+            <button class="hamburger">☰</button>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="blog.html">Vedic Blog</a></li>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="terms-and-conditions.html">Terms</a></li>
+                    <li><a href="contact.html" class="active">Contact</a></li>
+                </ul>
+            </nav>
+            <a href="index.html#download" class="cta-btn">Download APK</a>
+        </div>
+    </header>
+
+    <!-- Inner Header -->
+    <div class="inner-header">
+        <h1>🔱 Contact Support</h1>
+        <p>Have questions about offline Vedic Panchangam coordinates or theme configurations? Reach out to us below.</p>
+    </div>
+
+    <!-- Contact Container -->
+    <div class="contact-container">
+        
+        <!-- Support Info -->
+        <div class="contact-info">
+            <h2 class="contact-info-title">Divine Support</h2>
+            <p style="margin-bottom: 24px;">Since OM Alarm is 100% offline-first, your app configurations and local schedules stay secure on your device. For feature requests, compatibility queries, or feedback, send us a secure message below.</p>
+            
+            <div class="info-item">
+                <div class="info-icon">✉️</div>
+                <div class="info-text">
+                    <h3>Direct Email Support</h3>
+                    <p style="color: var(--accent); font-weight: bold; font-size: 14.5px;">support@vcapps.com</p>
+                </div>
+            </div>
+            
+            <div class="info-item">
+                <div class="info-icon">🕰️</div>
+                <div class="info-text">
+                    <h3>Typical Response Times</h3>
+                    <p>Within 24–48 hours (Monday–Friday)</p>
+                </div>
+            </div>
+            
+            <div class="info-item">
+                <div class="info-icon">🛡️</div>
+                <div class="info-text">
+                    <h3>Data Privacy Guarantee</h3>
+                    <p>We do not collect diagnostic telemetry or database logs.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Contact Form -->
+        <div class="contact-form">
+            <h2>Send a Message</h2>
+            
+            <form action="#" method="POST" onsubmit="alert('Simulated Success: Thank you for your feedback! Your message has been compiled and simulated successfully.'); return false;">
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" name="name" placeholder="e.g. Rama Rao" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="e.g. rao@example.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" name="subject" placeholder="e.g. Request for Venkateswara Theme details" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" placeholder="Write your message here..." required></textarea>
+                </div>
+                
+                <!-- Terms Compliance Checkbox -->
+                <label class="agree-container" for="agree">
+                    <input type="checkbox" id="agree" name="agree" required>
+                    <span>I agree to the <a href="terms-and-conditions.html" style="color: var(--primary); text-decoration: underline;">Terms & Conditions</a> and <a href="privacy-policy.html" style="color: var(--primary); text-decoration: underline;">Privacy Policy</a>.</span>
+                </label>
+                
+                <button type="submit" class="submit-btn">SEND MESSAGE</button>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p class="logo" style="justify-content: center;">
+                <div class="logo-icon-wrapper" style="margin: 0 auto 0 0; display: inline-flex; width: auto; height: auto;">
+                    <span class="logo-icon">🔱</span>
+                </div>
+                OM <span>ALARM</span>
+            </p>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="blog.html">Vedic Blog</a>
+                <a href="privacy-policy.html">Privacy Policy</a>
+                <a href="terms-and-conditions.html">Terms & Conditions</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <p class="copyright">&copy; 2026 VC Apps. All rights reserved. OM Alarm is a 100% offline-first devotional utility.</p>
+        </div>
+    </footer>
+
+    <!-- Interactive Navigation Drawer & Golden Particle Script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Scroll tracking header transitions
+            const header = document.querySelector("header");
+            window.addEventListener("scroll", () => {
+                if (window.scrollY > 40) {
+                    header.classList.add("scrolled");
+                } else {
+                    header.classList.remove("scrolled");
+                }
+            });
+
+            // Mobile Hamburger menu control
+            const hamburger = document.querySelector(".hamburger");
+            const nav = document.querySelector("nav");
+            if (hamburger && nav) {
+                hamburger.addEventListener("click", () => {
+                    nav.classList.toggle("active");
+                    hamburger.textContent = nav.classList.contains("active") ? "✕" : "☰";
+                });
+            }
+
+            // High-fidelity Javascript Golden Particle Generator
+            const container = document.querySelector(".particles-container");
+            if (container) {
+                for (let i = 0; i < 20; i++) {
+                    const particle = document.createElement("div");
+                    particle.classList.add("particle");
+                    
+                    const size = Math.random() * 5 + 1.5;
+                    const left = Math.random() * 100;
+                    const delay = Math.random() * 12;
+                    const duration = Math.random() * 14 + 10;
+                    
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    particle.style.left = `${left}%`;
+                    particle.style.animationDelay = `${delay}s`;
+                    particle.style.animationDuration = `${duration}s`;
+                    
+                    container.appendChild(particle);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

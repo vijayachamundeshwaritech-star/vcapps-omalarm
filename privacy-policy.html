@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔱 Privacy Policy — OM Alarm</title>
+    <meta name="description" content="Read the official Privacy Policy for OM Alarm. Learn how we guarantee 100% offline privacy, zero user data collection, and local-only permission usage.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Dynamic Saffron Aura Background Layer -->
+    <div class="volumetric-aura" style="top: 10%; left: 10%;"></div>
+    <div class="volumetric-aura-gold" style="top: 60%; right: 10%;"></div>
+    
+    <!-- Dynamic Floating Saffron Particles -->
+    <div class="particles-container"></div>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon-wrapper">
+                    <span class="logo-icon">🔱</span>
+                    <div class="logo-icon-glow"></div>
+                </div>
+                OM <span>ALARM</span>
+            </a>
+            
+            <button class="hamburger">☰</button>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="blog.html">Vedic Blog</a></li>
+                    <li><a href="privacy-policy.html" class="active">Privacy Policy</a></li>
+                    <li><a href="terms-and-conditions.html">Terms</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <a href="index.html#download" class="cta-btn">Download APK</a>
+        </div>
+    </header>
+
+    <!-- Inner Header -->
+    <div class="inner-header">
+        <h1>🔱 Privacy Policy</h1>
+        <p style="color: var(--accent); font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; font-size: 13px; margin-top: 10px;">Last Updated: May 31, 2026</p>
+    </div>
+
+    <!-- Inner Content -->
+    <div class="inner-content">
+        <div class="legal-box">
+            
+            <div class="legal-highlight-box">
+                <h3>🛡️ 100% Offline-First Architecture (Zero Data Collection)</h3>
+                <p style="margin-bottom: 0; font-size: 14.5px;">OM Alarm is built from the ground up to operate completely offline. The application does not require or declare the <code>INTERNET</code> permission, meaning it is technically impossible to transmit, collect, or share any user schedules or configurations. Your absolute privacy is mathematically guaranteed in code.</p>
+            </div>
+
+            <h2>1. Zero Telemetry & Private Design</h2>
+            <p>We respect your privacy and are committed to protecting it. Because OM Alarm has no networking capabilities:</p>
+            <ul>
+                <li><strong>No Network Transmissions:</strong> The App cannot connect to the internet, contains zero trackers, zero analytical SDKs, and zero advertisement modules.</li>
+                <li><strong>No Personal Data Collected:</strong> We do not collect, store, share, or transmit any Personally Identifiable Information (PII) such as names, email addresses, phone numbers, GPS coordinates, or device identifiers.</li>
+                <li><strong>Zero Third-Party Sharing:</strong> Since we collect exactly zero data, we share exactly zero data with third-party networks, agencies, or servers.</li>
+            </ul>
+
+            <h2>2. Android System Permissions & Local Purpose</h2>
+            <p>To deliver precise alarm, timer, and widget functionality, the App requests specific system permissions. All operations are performed strictly locally on-device:</p>
+            
+            <div class="permissions-grid">
+                <!-- Permission 1 -->
+                <div class="permission-card">
+                    <div class="permission-card-title">⏰ SCHEDULE_EXACT_ALARM</div>
+                    <div class="permission-card-desc">Required to schedule exact devotional alarms precisely at the user-specified times, ensuring your morning practices are never delayed by CPU sleep schedules.</div>
+                </div>
+                <!-- Permission 2 -->
+                <div class="permission-card">
+                    <div class="permission-card-title">🔱 USE_EXACT_ALARM</div>
+                    <div class="permission-card-desc">Required on newer Android versions (Android 13+) to guarantee exact alarm execution without operating system grouping or delaying limits.</div>
+                </div>
+                <!-- Permission 3 -->
+                <div class="permission-card">
+                    <div class="permission-card-title">🔄 RECEIVE_BOOT_COMPLETED</div>
+                    <div class="permission-card-desc">Restores your scheduled devotional alarms and widget tickers automatically when you reboot or power on your phone.</div>
+                </div>
+                <!-- Permission 4 -->
+                <div class="permission-card">
+                    <div class="permission-card-title">⚡ WAKE_LOCK</div>
+                    <div class="permission-card-desc">Temporarily wakes up the device CPU when an alarm triggers to ensure the dismiss/snooze screen wakes up instantly.</div>
+                </div>
+                <!-- Permission 5 -->
+                <div class="permission-card">
+                    <div class="permission-card-title">🔓 DISABLE_KEYGUARD</div>
+                    <div class="permission-card-desc">Allows displaying the beautiful custom alarm screen over your secure lock screen for easy, immediate snoozing or dismissal.</div>
+                </div>
+                <!-- Permission 6 -->
+                <div class="permission-card">
+                    <div class="permission-card-title">🖥️ FOREGROUND_SERVICE</div>
+                    <div class="permission-card-desc">Ensures active countdown timers and alarm ringing screens are not terminated by aggressive Android background service restrictions.</div>
+                </div>
+                <!-- Permission 7 -->
+                <div class="permission-card">
+                    <div class="permission-card-title">🔔 POST_NOTIFICATIONS</div>
+                    <div class="permission-card-desc">Required on Android 13+ to display the active timer count and scheduled alarm status overlays inside your phone's notification drawer.</div>
+                </div>
+                <!-- Permission 8 -->
+                <div class="permission-card">
+                    <div class="permission-card-title">🔋 REQUEST_IGNORE_BATTERY_OPTIMIZATIONS</div>
+                    <div class="permission-card-desc">Allows the App to request exemption from OEM background constraints, ensuring alarms trigger reliably in deep sleep modes.</div>
+                </div>
+            </div>
+
+            <h2>3. Secure Local Storage and Retention</h2>
+            <p>The App stores only minimal, non-sensitive configuration settings required for daily operations. This data is stored strictly in secure local directories:</p>
+            <ul>
+                <li><strong>SharedPreferences:</strong> Stores user configurations, selected language, active timer intervals, and active deity styles.</li>
+                <li><strong>Room SQLite Database:</strong> Stores alarm hours, minutes, repetition days, volumes, and custom labels securely on-device.</li>
+                <li><strong>Custom Ringtones Folder:</strong> Any custom devotional audio files you import are copied to the App's secure private directory (<code>context.filesDir/ringtones</code>) which resides in secure internal sandbox storage and is completely inaccessible to other apps.</li>
+            </ul>
+            <p>All stored configurations can be permanently destroyed by uninstalling the App or by navigating to: <strong>Settings ➜ Apps ➜ OM Alarm ➜ Storage ➜ Clear Data</strong>.</p>
+
+            <h2>4. Children's Privacy (COPPA Compliance)</h2>
+            <p>Because OM Alarm does not collect any personal data, we are fully compliant with the Children's Online Privacy Protection Act (COPPA). The App is completely safe for children of all ages, representing a secure, wholesome spiritual environment.</p>
+
+            <h2>5. Changes to This Privacy Policy</h2>
+            <p>We may update our Privacy Policy from time to time. Since the App is fully offline, we will notify users of any updates by updating this policy page inside new App updates. We encourage you to review this policy periodically.</p>
+
+            <h2>6. Contact & Support</h2>
+            <p>If you have any questions or feedback regarding this Privacy Policy, please contact the developer at:</p>
+            <p style="color: var(--primary); font-weight: bold; margin-top: 10px; font-family: var(--font-heading); letter-spacing: 0.5px;">Email: support@vcapps.com</p>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p class="logo" style="justify-content: center;">
+                <div class="logo-icon-wrapper" style="margin: 0 auto 0 0; display: inline-flex; width: auto; height: auto;">
+                    <span class="logo-icon">🔱</span>
+                </div>
+                OM <span>ALARM</span>
+            </p>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="blog.html">Vedic Blog</a>
+                <a href="privacy-policy.html">Privacy Policy</a>
+                <a href="terms-and-conditions.html">Terms & Conditions</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <p class="copyright">&copy; 2026 VC Apps. All rights reserved. OM Alarm is a 100% offline-first devotional utility.</p>
+        </div>
+    </footer>
+
+    <!-- Interactive Navigation Drawer & Golden Particle Script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Scroll tracking header transitions
+            const header = document.querySelector("header");
+            window.addEventListener("scroll", () => {
+                if (window.scrollY > 40) {
+                    header.classList.add("scrolled");
+                } else {
+                    header.classList.remove("scrolled");
+                }
+            });
+
+            // Mobile Hamburger menu control
+            const hamburger = document.querySelector(".hamburger");
+            const nav = document.querySelector("nav");
+            if (hamburger && nav) {
+                hamburger.addEventListener("click", () => {
+                    nav.classList.toggle("active");
+                    hamburger.textContent = nav.classList.contains("active") ? "✕" : "☰";
+                });
+            }
+
+            // High-fidelity Javascript Golden Particle Generator
+            const container = document.querySelector(".particles-container");
+            if (container) {
+                for (let i = 0; i < 20; i++) {
+                    const particle = document.createElement("div");
+                    particle.classList.add("particle");
+                    
+                    const size = Math.random() * 5 + 1.5;
+                    const left = Math.random() * 100;
+                    const delay = Math.random() * 12;
+                    const duration = Math.random() * 14 + 10;
+                    
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    particle.style.left = `${left}%`;
+                    particle.style.animationDelay = `${delay}s`;
+                    particle.style.animationDuration = `${duration}s`;
+                    
+                    container.appendChild(particle);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
